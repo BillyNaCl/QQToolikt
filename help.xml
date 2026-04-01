@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<help>
+	<item>
+		<name>compare</name>
+		<description>对比两个群聊的成员。</description>
+		<path>compare_help.txt</path>
+	</item>
+</help>

@@ -1,0 +1,15 @@
+﻿compare <群号1> <群号2> [选项]...
+
+对比两个群聊的成员。
+
+选项:
+  -j, --jaccard         通过jaccard算法计算两群的相似度
+  -m, --members         列出共有成员的QQ号
+  -M, --Members         列出共有成员的详细信息
+  -f, --format <格式>   指定输出格式，可选值: json, xml, yml, gfr (默认: gfr)
+                        gfr 表示 "Good for read"（适合人类阅读的格式）
+
+示例:
+  compare 123456 789012
+  compare 123456 789012 -j -m
+  compare 123456 789012 -M --format xml
