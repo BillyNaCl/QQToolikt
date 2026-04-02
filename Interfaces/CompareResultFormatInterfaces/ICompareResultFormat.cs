@@ -1,4 +1,4 @@
-﻿namespace BillyNaCl.QQGroupToolkit.Interfaces
+﻿namespace BillyNaCl.QQGroupToolkit.Interfaces.CompareResultFormatInterfaces
 {
     internal interface ICompareResultFormat
     {

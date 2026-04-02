@@ -1,6 +1,4 @@
-﻿using BillyNaCl.QQGroupToolkit.Interfaces;
-
-class MainLoop
+﻿class MainLoop
 {
     static void Main()
     {

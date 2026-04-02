@@ -6,7 +6,7 @@
   -j, --jaccard         通过jaccard算法计算两群的相似度
   -m, --members         列出共有成员的QQ号
   -M, --members-details 列出共有成员的详细信息
-  -f, --format <格式>   指定输出格式，可选值: json, xml, yml, gfr (默认: gfr)
+  -f, --format <格式>   指定输出格式，可选值: json, xml, yaml, gfr (默认: gfr)
                         gfr 表示 "Good for read"（适合人类阅读的格式）
 
 示例:
