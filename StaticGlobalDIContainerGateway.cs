@@ -1,13 +1,13 @@
-﻿using BillyNaCl.DI.Core.Interfaces;
-using BillyNaCl.DI.Core;
+﻿using BillyNaCl.DIContainer.Core.Interfaces;
+using BillyNaCl.DIContainer.Core;
 
-namespace BillyNaCl.DI.Core.StaticGlobalDIContainerGateway
+namespace BillyNaCl.DIContainer.Core.StaticGlobalDIContainerGateway
 {
     static class DI
     {
         public static IDIContainer Get() 
             => DefaultGlobalDIContainer.GetDefaultGlobalDIContainer();
 
-        public static T Service<T>() => Get().GetService<T>();
+        public static T GetService<T>() => Get().GetService<T>();
     }
 }

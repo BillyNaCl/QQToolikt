@@ -1,6 +1,6 @@
-﻿using BillyNaCl.DI.Core.Interfaces;
+﻿using BillyNaCl.DIContainer.Core.Interfaces;
 
-namespace BillyNaCl.DI.Core
+namespace BillyNaCl.DIContainer.Core
 {
     internal class DefaultGlobalDIContainer : IDIContainer
     {

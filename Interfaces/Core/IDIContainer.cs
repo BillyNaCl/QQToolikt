@@ -1,4 +1,4 @@
-﻿namespace BillyNaCl.DI.Core.Interfaces
+﻿namespace BillyNaCl.DIContainer.Core.Interfaces
 {
     internal interface IDIContainer
     {
