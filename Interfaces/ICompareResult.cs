@@ -19,6 +19,18 @@
         /// <summary>
         /// 共同成员的列表
         /// </summary>
-        List<IGroupMember> GetCommonMembers();
+        List<(IGroupMember inGroup1, IGroupMember inGroup2)> GetCommonMembers();
+
+        /// <summary>
+        /// 获取群聊1的名称
+        /// </summary>
+        /// <returns>群聊1的名称</returns>
+        string GetGroup1Name();
+
+        /// <summary>
+        /// 获取群聊2的名称
+        /// </summary>
+        /// <returns>群聊2的名称</returns>
+        string GetGroup2Name();
     }
 }
