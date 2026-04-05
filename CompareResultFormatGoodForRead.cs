@@ -12,32 +12,18 @@ namespace BillyNaCl.QQGroupToolkit
             bool members,
             bool members_details)
         {
-            string formatedResult = "";
-
-            formatedResult += $"两个群聊共同成员的数量为：";
-            formatedResult += result.GetCommonMembersCount();
-
+            StringBuilder sb = new();
+            sb.Append($"两个群聊共同成员的数量为：{result.GetCommonMembersCount()}");
             if (jaccard)
-            {
-                formatedResult += "\n\n";
-                formatedResult += $"两个群聊的相似度(根据jaccard相似系数计算)为：";
-                formatedResult += result.GetSimilarity();
-            }
-
-            if (members_details)
-            {
-                formatedResult += FormatMembers(result, true);
-            }
-            else if (members)
-            {
-                formatedResult += FormatMembers(result, false);
-            }
-            return formatedResult;
+                sb.Append($"\n\n两个群聊的相似度(根据jaccard相似系数计算)为：{result.GetSimilarity()}");
+            if (members_details || members)
+                sb.Append(FormatMembers(result, members_details));
+            return sb.ToString();
         }
 
-        private string FormatMembers(ICompareResult result, bool details)
+        private static string FormatMembers(ICompareResult result, bool details)
         {
-            var sb = new StringBuilder();
+            StringBuilder sb = new();
             string Group1Name = result.GetGroup1Name();
             string Group2Name = result.GetGroup2Name();
             foreach (var member in result.GetCommonMembers())
@@ -48,63 +34,36 @@ namespace BillyNaCl.QQGroupToolkit
             return sb.ToString();
         }
 
-        private string FormatMember(
+        private static string FormatMember(
             string Group1Name,
             string Group2Name,
             (IGroupMember inGroup1, IGroupMember inGroup2) member,
             bool details)
         {
-            string formatedResult = "";
-            formatedResult += "QQ号：";
-            formatedResult += member.inGroup1.GetUserId() + '\n';
-            formatedResult += "昵称：";
-            formatedResult += member.inGroup1.GetNickname() + '\n';
-            formatedResult += $"在群聊{Group1Name}中的昵称：";
-            formatedResult += member.inGroup1.GetNameInGroup() + '\n';
-            formatedResult += $"在群聊{Group2Name}中的昵称：";
-            formatedResult += member.inGroup2.GetNameInGroup() + '\n';
+            StringBuilder sb = new();
+            sb.Append($"QQ号：{member.inGroup1.GetUserId()}\n");
+            sb.Append($"昵称：{member.inGroup1.GetNickname}\n");
+            sb.Append($"在群聊{Group1Name}中的昵称：{member.inGroup1.GetNameInGroup()}\n");
+            sb.Append($"在群聊{Group2Name}中的昵称：{member.inGroup2.GetNameInGroup()}\n");
             if (details)
             {
-                formatedResult += $"性别：";
-                formatedResult += member.inGroup1.GetGender() + '\n';
-                formatedResult += $"加入群聊{Group1Name}的时间：";
-                formatedResult += member.inGroup1.GetJoinTime()
-                    .ToString("yyyy年MM月dd日HH:mm:ss") + '\n';
-                formatedResult += $"加入群聊{Group2Name}的时间：";
-                formatedResult += member.inGroup2.GetJoinTime()
-                    .ToString("yyyy年MM月dd日HH:mm:ss") + '\n';
-                formatedResult += $"群聊{Group1Name}中的等级：";
-                formatedResult += member.inGroup1.GetLevelInGroup() + '\n';
-                formatedResult += $"群聊{Group2Name}中的等级：";
-                formatedResult += member.inGroup2.GetLevelInGroup() + '\n';
-                formatedResult += $"群聊{Group1Name}中的专属头衔：";
-                formatedResult += member.inGroup1.GetTitle() + '\n';
-                formatedResult += $"群聊{Group2Name}中的专属头衔：";
-                formatedResult += member.inGroup2.GetTitle() + '\n';
-                formatedResult += $"群聊{Group1Name}中的权限等级：";
-                formatedResult += member.inGroup1.GetRole() + '\n';
-                formatedResult += $"群聊{Group2Name}中的权限等级：";
-                formatedResult += member.inGroup2.GetRole() + '\n';
-                formatedResult += $"群聊{Group1Name}中的最后一次发言时间：";
-                formatedResult += member.inGroup1.GetLastSpeakTime()
-                    .ToString("yyyy年MM月dd日HH:mm:ss") + '\n';
-                formatedResult += $"群聊{Group2Name}中的最后一次发言时间：";
-                formatedResult += member.inGroup2.GetLastSpeakTime()
-                    .ToString("yyyy年MM月dd日HH:mm:ss") + '\n';
+                sb.Append($"性别：{member.inGroup1.GetGender()}\n");
+                sb.Append($"加入群聊{Group1Name}的时间：{member.inGroup1.GetJoinTime():yyyy年MM月dd日HH:mm:ss}\n");
+                sb.Append($"加入群聊{Group2Name}的时间：{member.inGroup2.GetJoinTime():yyyy年MM月dd日HH:mm:ss}\n");
+                sb.Append($"群聊{Group1Name}中的等级：{member.inGroup1.GetLevelInGroup()}\n");
+                sb.Append($"群聊{Group2Name}中的等级：{member.inGroup2.GetLevelInGroup()}\n");
+                sb.Append($"群聊{Group1Name}中的专属头衔：{member.inGroup1.GetTitle()}\n");
+                sb.Append($"群聊{Group2Name}中的专属头衔：{member.inGroup2.GetTitle()}\n");
+                sb.Append($"群聊{Group1Name}中的权限等级：{member.inGroup1.GetRole()}\n");
+                sb.Append($"群聊{Group2Name}中的权限等级：{member.inGroup2.GetRole()}\n");
+                sb.Append($"群聊{Group1Name}中的最后一次发言时间：{member.inGroup1.GetLastSpeakTime():yyyy年MM月dd日HH:mm:ss}\n");
+                sb.Append($"群聊{Group2Name}中的最后一次发言时间：{member.inGroup2.GetLastSpeakTime():yyyy年MM月dd日HH:mm:ss}\n");
                 if (member.inGroup1.GetShutUpEndTime() != null)
-                {
-                    formatedResult += $"该用户已被群聊{Group1Name}禁言直到";
-                    formatedResult += member.inGroup1.GetShutUpEndTime().GetValueOrDefault()
-                        .ToString("yyyy年MM月dd日HH:mm:ss") + '\n';
-                }
+                    sb.Append($"该用户已被群聊{Group1Name}禁言直到{member.inGroup1.GetShutUpEndTime().GetValueOrDefault():yyyy年MM月dd日HH:mm:ss}\n");
                 if (member.inGroup2.GetShutUpEndTime() != null)
-                {
-                    formatedResult += $"该用户已被群聊{Group2Name}禁言直到";
-                    formatedResult += member.inGroup2.GetShutUpEndTime().GetValueOrDefault()
-                        .ToString("yyyy年MM月dd日HH:mm:ss") + '\n';
-                }
+                    sb.Append($"该用户已被群聊{Group2Name}禁言直到{member.inGroup2.GetShutUpEndTime().GetValueOrDefault():yyyy年MM月dd日HH:mm:ss}\n");
             }
-            return formatedResult;
+            return sb.ToString();
         }
     }
 }
