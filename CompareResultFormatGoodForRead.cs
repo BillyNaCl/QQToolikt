@@ -40,6 +40,8 @@ namespace BillyNaCl.QQGroupToolkit
             (IGroupMember inGroup1, IGroupMember inGroup2) member,
             bool details)
         {
+            var g1 = Group1Name;
+            var g2 = Group2Name;
             var (m1, m2) = member;
             StringBuilder sb = new();
             sb.Append($"QQ号：{m1.GetUserId()}\n");
@@ -49,20 +51,20 @@ namespace BillyNaCl.QQGroupToolkit
             if (details)
             {
                 sb.Append($"性别：{m1.GetGender()}\n");
-                sb.Append($"加入群聊{Group1Name}的时间：{m1.GetJoinTime():yyyy年MM月dd日HH:mm:ss}\n");
-                sb.Append($"加入群聊{Group2Name}的时间：{m2.GetJoinTime():yyyy年MM月dd日HH:mm:ss}\n");
-                sb.Append($"群聊{Group1Name}中的等级：{m1.GetLevelInGroup()}\n");
-                sb.Append($"群聊{Group2Name}中的等级：{m2.GetLevelInGroup()}\n");
-                sb.Append($"群聊{Group1Name}中的专属头衔：{m1.GetTitle()}\n");
-                sb.Append($"群聊{Group2Name}中的专属头衔：{m2.GetTitle()}\n");
-                sb.Append($"群聊{Group1Name}中的权限等级：{m1.GetRole()}\n");
-                sb.Append($"群聊{Group2Name}中的权限等级：{m2.GetRole()}\n");
-                sb.Append($"群聊{Group1Name}中的最后一次发言时间：{m1.GetLastSpeakTime():yyyy年MM月dd日HH:mm:ss}\n");
-                sb.Append($"群聊{Group2Name}中的最后一次发言时间：{m2.GetLastSpeakTime():yyyy年MM月dd日HH:mm:ss}\n");
+                sb.Append($"加入群聊{g1}的时间：{m1.GetJoinTime():yyyy年MM月dd日HH:mm:ss}\n");
+                sb.Append($"加入群聊{g2}的时间：{m2.GetJoinTime():yyyy年MM月dd日HH:mm:ss}\n");
+                sb.Append($"群聊{g1}中的等级：{m1.GetLevelInGroup()}\n");
+                sb.Append($"群聊{g2}中的等级：{m2.GetLevelInGroup()}\n");
+                sb.Append($"群聊{g1}中的专属头衔：{m1.GetTitle()}\n");
+                sb.Append($"群聊{g2}中的专属头衔：{m2.GetTitle()}\n");
+                sb.Append($"群聊{g1}中的权限等级：{m1.GetRole()}\n");
+                sb.Append($"群聊{g2}中的权限等级：{m2.GetRole()}\n");
+                sb.Append($"群聊{g1}中的最后一次发言时间：{m1.GetLastSpeakTime():yyyy年MM月dd日HH:mm:ss}\n");
+                sb.Append($"群聊{g2}中的最后一次发言时间：{m2.GetLastSpeakTime():yyyy年MM月dd日HH:mm:ss}\n");
                 if (member.inGroup1.GetShutUpEndTime() != null)
-                    sb.Append($"该用户已被群聊{Group1Name}禁言直到{m1.GetShutUpEndTime().GetValueOrDefault():yyyy年MM月dd日HH:mm:ss}\n");
+                    sb.Append($"该用户已被群聊{g1}禁言直到{m1.GetShutUpEndTime().GetValueOrDefault():yyyy年MM月dd日HH:mm:ss}\n");
                 if (member.inGroup2.GetShutUpEndTime() != null)
-                    sb.Append($"该用户已被群聊{Group2Name}禁言直到{m2.GetShutUpEndTime().GetValueOrDefault():yyyy年MM月dd日HH:mm:ss}\n");
+                    sb.Append($"该用户已被群聊{g2}禁言直到{m2.GetShutUpEndTime().GetValueOrDefault():yyyy年MM月dd日HH:mm:ss}\n");
             }
             return sb.ToString();
         }
