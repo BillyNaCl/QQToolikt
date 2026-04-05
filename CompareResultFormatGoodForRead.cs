@@ -1,5 +1,6 @@
 ﻿using BillyNaCl.QQGroupToolkit.Interfaces;
 using BillyNaCl.QQGroupToolkit.Interfaces.CompareResultFormatInterfaces;
+using BillyNaCl.StaticUtils.Long2Date;
 using System.Text;
 
 namespace BillyNaCl.QQGroupToolkit
@@ -51,20 +52,20 @@ namespace BillyNaCl.QQGroupToolkit
             if (details)
             {
                 sb.Append($"性别：{m1.GetGender()}\n");
-                sb.Append($"加入群聊{g1}的时间：{m1.GetJoinTime():yyyy年MM月dd日HH:mm:ss}\n");
-                sb.Append($"加入群聊{g2}的时间：{m2.GetJoinTime():yyyy年MM月dd日HH:mm:ss}\n");
+                sb.Append($"加入群聊{g1}的时间：{m1.GetJoinTime().Long2Date_cn()}\n");
+                sb.Append($"加入群聊{g2}的时间：{m2.GetJoinTime().Long2Date_cn()}\n");
                 sb.Append($"群聊{g1}中的等级：{m1.GetLevelInGroup()}\n");
                 sb.Append($"群聊{g2}中的等级：{m2.GetLevelInGroup()}\n");
                 sb.Append($"群聊{g1}中的专属头衔：{m1.GetTitle()}\n");
                 sb.Append($"群聊{g2}中的专属头衔：{m2.GetTitle()}\n");
                 sb.Append($"群聊{g1}中的权限等级：{m1.GetRole()}\n");
                 sb.Append($"群聊{g2}中的权限等级：{m2.GetRole()}\n");
-                sb.Append($"群聊{g1}中的最后一次发言时间：{m1.GetLastSpeakTime():yyyy年MM月dd日HH:mm:ss}\n");
-                sb.Append($"群聊{g2}中的最后一次发言时间：{m2.GetLastSpeakTime():yyyy年MM月dd日HH:mm:ss}\n");
+                sb.Append($"群聊{g1}中的最后一次发言时间：{m1.GetLastSpeakTime().Long2Date_cn()}\n");
+                sb.Append($"群聊{g2}中的最后一次发言时间：{m2.GetLastSpeakTime().Long2Date_cn()}\n");
                 if (member.inGroup1.GetShutUpEndTime() != null)
-                    sb.Append($"该用户已被群聊{g1}禁言直到{m1.GetShutUpEndTime().GetValueOrDefault():yyyy年MM月dd日HH:mm:ss}\n");
+                    sb.Append($"该用户已被群聊{g1}禁言直到{m1.GetShutUpEndTime().GetValueOrDefault().Long2Date_cn()}\n");
                 if (member.inGroup2.GetShutUpEndTime() != null)
-                    sb.Append($"该用户已被群聊{g2}禁言直到{m2.GetShutUpEndTime().GetValueOrDefault():yyyy年MM月dd日HH:mm:ss}\n");
+                    sb.Append($"该用户已被群聊{g2}禁言直到{m2.GetShutUpEndTime().GetValueOrDefault().Long2Date_cn()}\n");
             }
             return sb.ToString();
         }
