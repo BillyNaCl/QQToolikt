@@ -1,4 +1,4 @@
-﻿compare <群号1> <群号2> [选项]...
+﻿compare [参数] <群号1> <群号2>...
 
 对比两个群聊的成员。默认只返回共同成员的数量。
 
@@ -11,5 +11,5 @@
 
 示例:
   compare 123456 789012
-  compare 123456 789012 -j -m
-  compare 123456 789012 -M --format xml
+  compare -jm 123456 789012
+  compare -M --format=xml 123456 789012

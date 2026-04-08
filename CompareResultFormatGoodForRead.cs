@@ -47,8 +47,8 @@ namespace BillyNaCl.QQGroupToolkit
             StringBuilder sb = new();
             sb.Append($"QQ号：{m1.GetUserId()}\n");
             sb.Append($"昵称：{m1.GetNickname}\n");
-            sb.Append($"在群聊{Group1Name}中的昵称：{m1.GetNameInGroup()}\n");
-            sb.Append($"在群聊{Group2Name}中的昵称：{m2.GetNameInGroup()}\n");
+            sb.Append($"在群聊{g1}中的昵称：{m1.GetNameInGroup()}\n");
+            sb.Append($"在群聊{g2}中的昵称：{m2.GetNameInGroup()}\n");
             if (details)
             {
                 sb.Append($"性别：{m1.GetGender()}\n");
