@@ -30,6 +30,9 @@ namespace BillyNaCl.QQGroupToolkit.CommandExecutor
                         foreach (var opt in current_option[1..])
                         {
                             current_option = optShort2Long[opt];
+                            #if DEBUG
+                            Console.WriteLine(result.Union(OptArgsPairs(optsOrArgs, current_option, ref index)));
+                            #endif
                             result = (Dictionary<string, string[]>)result.Union(OptArgsPairs(optsOrArgs, current_option, ref index));
                         }
                     }
