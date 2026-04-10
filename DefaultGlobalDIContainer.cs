@@ -1,6 +1,9 @@
 ﻿using BillyNaCl.DIContainer.Core.Interfaces;
 using BillyNaCl.QQGroupToolkit;
 using BillyNaCl.QQGroupToolkit.Interfaces.CompareResultFormatInterfaces;
+using BillyNaCl.QQGroupToolkit.Interfaces.CommandExecutor;
+using BillyNaCl.QQGroupToolkit.CommandExecutor;
+using BillyNaCl.QQGroupToolkit.Interfaces;
 
 namespace BillyNaCl.DIContainer.Core
 {
@@ -18,6 +21,8 @@ namespace BillyNaCl.DIContainer.Core
         private void RegisterDefaultConfig()
         {
             Register<ICompareResultFormat>(() => new CompareResultFormatPortal());
+            Register<ICommandPortal>(() => new CommandPortal());
+            Register<ICompareCommandExecutor>(() => new CompareCommandExecutor());
         }
 
         public void Register<T>(Func<T> factoryMethod) where T : class

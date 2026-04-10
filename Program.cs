@@ -1,4 +1,7 @@
-﻿class MainLoop
+﻿using BillyNaCl.DIContainer.Core.StaticGlobalDIContainerGateway;
+using BillyNaCl.QQGroupToolkit.Interfaces.CommandExecutor;
+
+class MainLoop
 {
     static void Main()
     {
@@ -9,6 +12,8 @@
             {
                 break;
             }
+            if (input is not null)
+                DI.GetService<ICommandPortal>().Execute(input);
         }
         Console.WriteLine("程序已退出，按任意键关闭此窗口。");
         Console.ReadKey();
