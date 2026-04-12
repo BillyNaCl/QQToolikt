@@ -23,6 +23,8 @@ namespace BillyNaCl.DIContainer.Core
             Register<ICompareResultFormat>(() => new CompareResultFormatPortal());
             Register<ICommandPortal>(() => new CommandPortal());
             Register<ICompareCommandExecutor>(() => new CompareCommandExecutor());
+            Register<ICompare>(() => new QQGroupComparator());
+            Register<IGetGroupMembers>(() => new DataFetcher());
         }
 
         public void Register<T>(Func<T> factoryMethod) where T : class

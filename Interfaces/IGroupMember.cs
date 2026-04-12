@@ -15,7 +15,7 @@
         /// <summary>
         /// 用户昵称
         /// </summary>
-        int GetNickname();
+        string GetNickname();
 
         /// <summary>
         /// 性别
@@ -41,7 +41,7 @@
         /// 用户在群内的等级
         /// </summary>
         /// <returns></returns>
-        string GetLevelInGroup();
+        int GetLevelInGroup();
 
         /// <summary>
         /// 用户加入时间（Unix时间戳）（单位：秒）
