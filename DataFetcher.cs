@@ -11,9 +11,6 @@ namespace BillyNaCl.QQGroupToolkit
         IHTTPClientService httpClientService = DI.GetService<IHTTPClientService>();
         IURLBuilder urlBuilder = DI.GetService<IURLBuilder>();
         IConfigProvider configProvider = DI.GetService<IConfigProvider>();
-        // TODO: 此处是自身的方法，应该改为直接调用以避免额外创建一个对象
-        // BLOCKER: 恶性bug，依赖自身会导致DI容器循环依赖导致无限递归引发栈溢出！
-        IGetGroupInfo groupInfoProvider = DI.GetService<IGetGroupInfo>();
         const string ProtocolIsNotSupported = "Protocol is not supported. Only \"One Bot 11\", \"Satori\", and \"Milky\" are supported.";
 
         // TODO: 这个才应该是基础方法，现在的调用方式会导致额外发送一次HTTP请求去获取群信息，即使没有使用
@@ -70,7 +67,7 @@ namespace BillyNaCl.QQGroupToolkit
                 GroupMember m = new(Gender, JoinTime, LastSpeakTime, LevelInGroup, NameInGroup, NickName, role, ShutUpEndTime, title, UserId, GroupId);
                 result.Add(m);
             }
-            groupName = groupInfoProvider.GetGroupInfo(groupId).Name;
+            groupName = GetGroupInfo(groupId).Name;
             return result;
         }
 

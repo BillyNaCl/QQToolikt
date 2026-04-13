@@ -39,6 +39,7 @@ namespace BillyNaCl.QQGroupToolkit.CommandExecutor
                 }
                 else
                 {
+                    // BLOCKER: 恶性bug,没有写如果没找到键"-"的处理，导致无限循环。
                     if (result.TryGetValue("-", out var argeOfCommand))
                     {
                         var temp_list = argeOfCommand.ToList();
