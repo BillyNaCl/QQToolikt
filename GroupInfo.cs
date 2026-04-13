@@ -3,9 +3,9 @@
     internal record struct GroupInfo(
         int ID,
         string Name,
-        int MembersCount,
-        int MaxMembersCount,
-        string ReMarkrem,
+        int MemberCount,
+        int MaxMemberCount,
+        string Remark,
         long CreatedTime,
         string Description,
         string Question,

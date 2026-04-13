@@ -6,14 +6,17 @@ using System.Text.Json.Nodes;
 
 namespace BillyNaCl.QQGroupToolkit
 {
-    internal class DataFetcher : IGetGroupMembers
+    internal class DataFetcher : IGetGroupMembers, IGetGroupInfo
     {
         IHTTPClientService httpClientService = DI.GetService<IHTTPClientService>();
         IURLBuilder urlBuilder = DI.GetService<IURLBuilder>();
         IConfigProvider configProvider = DI.GetService<IConfigProvider>();
+        // TODO: 此处是自身的方法，应该改为直接调用以避免额外创建一个对象
+        // BLOCKER: 恶性bug，依赖自身会导致DI容器循环依赖导致无限递归引发栈溢出！
         IGetGroupInfo groupInfoProvider = DI.GetService<IGetGroupInfo>();
         const string ProtocolIsNotSupported = "Protocol is not supported. Only \"One Bot 11\", \"Satori\", and \"Milky\" are supported.";
 
+        // TODO: 这个才应该是基础方法，现在的调用方式会导致额外发送一次HTTP请求去获取群信息，即使没有使用
         public List<IGroupMember> GetGroupMembers(int groupId)
             => GetGroupMembers(groupId, out _);
 
@@ -37,8 +40,9 @@ namespace BillyNaCl.QQGroupToolkit
                 "Milky" => "get_group_member_list",
                 _ => throw new ProtocolViolationException(ProtocolIsNotSupported)
             };
-            string url = urlBuilder.BuildLocalHostURL(protocol, basePath, endPoint);
+            string url = urlBuilder.BuildLocalHostURL(protocol, 3000, basePath, endPoint);
             string body = BuildRequestBody(protocol, groupId, null);
+            //TODO: 从这里开始到解析JSON的部分应该抽象出来，以便于其他地方复用
             var response = httpClientService.POST(url, body).GetAwaiter().GetResult();
             // TODO: 这里需要检查错误
             response.EnsureSuccessStatusCode();
@@ -70,7 +74,7 @@ namespace BillyNaCl.QQGroupToolkit
             return result;
         }
 
-        string BuildRequestBody(string protocol, int groupId, string? next)
+        static string BuildRequestBody(string protocol, int groupId, string? next)
         {
             if (protocol is "One Bot 11" or "Milky")
                 return $"{{\"group_id\":{groupId}}}";
@@ -82,6 +86,44 @@ namespace BillyNaCl.QQGroupToolkit
                     return $"{{\"guild_id\":\"{groupId}\",\"next\":\"{next}\"}}";
             }
             else throw new ProtocolViolationException(ProtocolIsNotSupported);
+        }
+
+        public GroupInfo GetGroupInfo(int groupId)
+        {
+            var protocol = configProvider.GetProtocol();
+            var port = configProvider.GetPort();
+            //TODO: 这里记得适配其它协议
+            var basePath = "api";
+            var endpoint = "get_group_info";
+            var url = urlBuilder.BuildLocalHostURL(protocol, port, basePath, endpoint);
+            var body = BuildRequestBody(protocol, groupId, null);
+            var response = httpClientService.POST(url, body).GetAwaiter().GetResult();
+            response.EnsureSuccessStatusCode();
+            var responseBody = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
+            var jsonNodeRoot = JsonNode.Parse(responseBody);
+            var groupInfoJsonNode = jsonNodeRoot?["data"]?["group"]!;
+            int groupID = (int)(groupInfoJsonNode["group_id"]?.GetValue<int>())!;
+            string groupName = groupInfoJsonNode["group_name"]?.ToString()!;
+            int memberCount = (int)(groupInfoJsonNode["member_count"]?.GetValue<int>())!;
+            int maxMemberCount = (int)(groupInfoJsonNode["max_member_count"]?.GetValue<int>())!;
+            string remark = groupInfoJsonNode["remark"]?.ToString()!;
+            long createdTime = (long)(groupInfoJsonNode["created_time"]?.GetValue<long>())!;
+            string description = groupInfoJsonNode["description"]?.ToString()!;
+            string question = groupInfoJsonNode["question"]?.ToString()!;
+            string announcement = groupInfoJsonNode["announcement"]?.ToString()!;
+            GroupInfo groupInfo = new()
+            {
+                ID = groupID,
+                Name = groupName,
+                MemberCount = memberCount,
+                MaxMemberCount = maxMemberCount,
+                Remark = remark,
+                CreatedTime = createdTime,
+                Description = description,
+                Question = question,
+                Announcement = announcement
+            };
+            return groupInfo;
         }
     }
 }

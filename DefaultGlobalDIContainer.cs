@@ -25,6 +25,10 @@ namespace BillyNaCl.DIContainer.Core
             Register<ICompareCommandExecutor>(() => new CompareCommandExecutor());
             Register<ICompare>(() => new QQGroupComparator());
             Register<IGetGroupMembers>(() => new DataFetcher());
+            Register<IHTTPClientService>(() => new HTTPClientService());
+            Register<IURLBuilder>(() => new URLBuilder());
+            Register<IConfigProvider>(() => new DefaultComfig());
+            Register<IGetGroupInfo>(() => new DataFetcher());
         }
 
         public void Register<T>(Func<T> factoryMethod) where T : class
