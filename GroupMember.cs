@@ -13,10 +13,10 @@ namespace BillyNaCl.QQGroupToolkit
         string Role { get; init; }
         long? ShutUpEndTime { get; init; }
         string Title { get; init; }
-        int UserId { get; init; }
-        int GroupId { get; init; }
+        long UserId { get; init; }
+        long GroupId { get; init; }
 
-        public GroupMember(string gender, long joinTime, long lastSpeakTime, int levelInGroup, string nameInGroup, string nickname, string role, long? shutUpEndTime, string title, int userId, int groupId)
+        public GroupMember(string gender, long joinTime, long lastSpeakTime, int levelInGroup, string nameInGroup, string nickname, string role, long? shutUpEndTime, string title, long userId, long groupId)
         {
             Gender = gender;
             JoinTime = joinTime;
@@ -49,8 +49,8 @@ namespace BillyNaCl.QQGroupToolkit
 
         public string GetTitle() => Title;
 
-        public int GetUserId() => UserId;
+        public long GetUserId() => UserId;
 
-        public int GrtGroupId() => GroupId;
+        public long GrtGroupId() => GroupId;
     }
 }

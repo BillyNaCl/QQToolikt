@@ -29,6 +29,7 @@ namespace BillyNaCl.DIContainer.Core
             Register<IURLBuilder>(() => new URLBuilder());
             Register<IConfigProvider>(() => new DefaultComfig());
             Register<IGetGroupInfo>(() => new DataFetcher());
+            Register<ICompareResultFormatGoodForRead>(() => new CompareResultFormatGoodForRead());
         }
 
         public void Register<T>(Func<T> factoryMethod) where T : class

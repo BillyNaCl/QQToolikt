@@ -62,8 +62,8 @@ namespace BillyNaCl.QQGroupToolkit
                 string role = memberJsonNode?["role"]?.ToString()!;
                 long? ShutUpEndTime = memberJsonNode?["shut_up_end_time"]?.GetValue<long>();
                 string title = memberJsonNode?["title"]?.ToString()!;
-                int UserId = (int)(memberJsonNode?["user_id"]?.GetValue<int>())!;
-                int GroupId = (int)(memberJsonNode?["group_id"]?.GetValue<int>())!;
+                long UserId = (long)(memberJsonNode?["user_id"]?.GetValue<long>())!;
+                long GroupId = (int)(memberJsonNode?["group_id"]?.GetValue<long>())!;
                 GroupMember m = new(Gender, JoinTime, LastSpeakTime, LevelInGroup, NameInGroup, NickName, role, ShutUpEndTime, title, UserId, GroupId);
                 result.Add(m);
             }

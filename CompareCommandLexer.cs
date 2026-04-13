@@ -1,4 +1,5 @@
 ﻿using BillyNaCl.QQGroupToolkit.Interfaces.CommandExecutor;
+using System.Diagnostics;
 
 namespace BillyNaCl.QQGroupToolkit.CommandExecutor
 {
@@ -30,22 +31,19 @@ namespace BillyNaCl.QQGroupToolkit.CommandExecutor
                         foreach (var opt in current_option[1..])
                         {
                             current_option = optShort2Long[opt];
-                            #if DEBUG
-                            Console.WriteLine(result.Union(OptArgsPairs(optsOrArgs, current_option, ref index)));
-                            #endif
-                            result = (Dictionary<string, string[]>)result.Union(OptArgsPairs(optsOrArgs, current_option, ref index));
+                            result = result.Union(OptArgsPairs(optsOrArgs, current_option, ref index)).ToDictionary();
                         }
                     }
                 }
                 else
                 {
-                    // BLOCKER: 恶性bug,没有写如果没找到键"-"的处理，导致无限循环。
-                    if (result.TryGetValue("-", out var argeOfCommand))
-                    {
-                        var temp_list = argeOfCommand.ToList();
-                        temp_list.Add(current_option);
-                        result["-"] = [.. temp_list];
-                    }
+                    if (!result.ContainsKey("-"))
+                        result.Add("-", []);
+                    var argeOfCommand = result["-"];
+                    var temp_list = argeOfCommand.ToList();
+                    temp_list.Add(current_option);
+                    result["-"] = [.. temp_list];
+                    ++index;
                 }
             }
             return result;
@@ -71,7 +69,7 @@ namespace BillyNaCl.QQGroupToolkit.CommandExecutor
                     var offset = 0;
                     while (offset < argsNumber)
                     {
-                        index++;
+                        ++index;
                         if (index < opt_or_args.Length)
                         {
                             if (opt_or_args[index][0] == '-')

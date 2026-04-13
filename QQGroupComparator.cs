@@ -20,7 +20,7 @@ namespace BillyNaCl.QQGroupToolkit
                 .ToList();
             int commonMembersCount = commonMembers.Count;
             int allMemberCount = groupMembers1.Count + groupMembers2.Count - commonMembersCount;
-            float jaccardSimilarity = commonMembersCount / allMemberCount;
+            float jaccardSimilarity = commonMembersCount / (float)allMemberCount;
             ICompareResult result = new CompareResult(commonMembers, commonMembersCount, group1Name, group2Name, jaccardSimilarity);
             return result;
         }

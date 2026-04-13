@@ -5,12 +5,12 @@
         /// <summary>
         /// 群号
         /// </summary>
-        int GrtGroupId();
+        long GrtGroupId();
 
         /// <summary>
         /// QQ号
         /// </summary>
-        int GetUserId();
+        long GetUserId();
 
         /// <summary>
         /// 用户昵称

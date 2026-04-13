@@ -16,7 +16,7 @@ namespace BillyNaCl.QQGroupToolkit
             StringBuilder sb = new();
             sb.Append($"两个群聊共同成员的数量为：{result.GetCommonMembersCount()}");
             if (jaccard)
-                sb.Append($"\n\n两个群聊的相似度(根据jaccard相似系数计算)为：{result.GetSimilarity()}");
+                sb.Append($"\n\n两个群聊的相似度(根据jaccard相似系数计算)为：{result.GetSimilarity():P2}");
             if (members_details || members)
                 sb.Append(FormatMembers(result, members_details));
             return sb.ToString();
@@ -46,7 +46,7 @@ namespace BillyNaCl.QQGroupToolkit
             var (m1, m2) = member;
             StringBuilder sb = new();
             sb.Append($"QQ号：{m1.GetUserId()}\n");
-            sb.Append($"昵称：{m1.GetNickname}\n");
+            sb.Append($"昵称：{m1.GetNickname()}\n");
             sb.Append($"在群聊{g1}中的昵称：{m1.GetNameInGroup()}\n");
             sb.Append($"在群聊{g2}中的昵称：{m2.GetNameInGroup()}\n");
             if (details)
